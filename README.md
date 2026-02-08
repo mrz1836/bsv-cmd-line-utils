@@ -8,14 +8,20 @@ All tools are single Go binaries with no runtime dependencies. Designed for Unix
 
 | Tool | Description |
 |------|-------------|
-| **keygen** | Generates BSV key pairs (mainnet/testnet, compressed/uncompressed, JSON output) |
-| **wifinfo** | Inspects a WIF private key — shows pubkeys, addresses, and WIFs for both networks |
-| **carve** | Creates and signs BSV transactions with smart UTXO selection and fee estimation |
+| **addr** | Validates BSV addresses or derives addresses from a public key |
+| **balance** | Checks address balance and lists UTXOs via WhatsOnChain |
 | **broadcast** | Broadcasts raw transactions to the BSV network via ARC with optional monitoring |
-| **txstatus** | Checks transaction status via ARC with optional polling until final state |
+| **carve** | Creates and signs BSV transactions with smart UTXO selection and fee estimation |
+| **decodescript** | Decodes hex-encoded scripts to human-readable ASM with type detection |
 | **getraw** | Fetches raw transaction hex from WhatsOnChain |
-| **prettytx** | Parses and displays raw transactions in human-readable colorized format |
+| **keygen** | Generates BSV key pairs (mainnet/testnet, compressed/uncompressed, JSON output) |
+| **opreturn** | Creates signed transactions with OP_RETURN data outputs |
 | **pick** | Extracts specific fields from raw transactions for pipeline processing |
+| **prettytx** | Parses and displays raw transactions in human-readable colorized format |
+| **signmsg** | Signs messages using Bitcoin Signed Message format |
+| **txstatus** | Checks transaction status via ARC with optional polling until final state |
+| **verifymsg** | Verifies Bitcoin Signed Message signatures |
+| **wifinfo** | Inspects a WIF private key — shows pubkeys, addresses, and WIFs for both networks |
 
 ## Installation
 
@@ -23,7 +29,7 @@ All tools are single Go binaries with no runtime dependencies. Designed for Unix
 git clone https://github.com/noscere-labs/bsv-cmd-line-utils.git
 cd bsv-cmd-line-utils
 
-# Install all 8 tools
+# Install all tools
 go install ./cmd/...
 ```
 
@@ -116,21 +122,27 @@ polling:
   backoff_factor: 1.5
 ```
 
-Other tools (`carve`, `getraw`) query WhatsOnChain directly — no API key required.
+Other tools (`carve`, `getraw`, `balance`) query WhatsOnChain directly — no API key required.
 
 ## Project Structure
 
 ```
 bsv-cmd-line-utils/
 ├── cmd/
-│   ├── broadcast/    # Transaction broadcaster (ARC)
-│   ├── carve/        # Transaction builder (UTXO selection + signing)
-│   ├── getraw/       # Transaction fetcher (WhatsOnChain)
-│   ├── keygen/       # Key pair generator
-│   ├── pick/         # Transaction field extractor
-│   ├── prettytx/     # Transaction parser/visualizer
-│   ├── txstatus/     # Status checker (ARC)
-│   └── wifinfo/      # WIF key inspector
+│   ├── addr/          # Address validator & deriver
+│   ├── balance/       # Balance checker & UTXO lister
+│   ├── broadcast/     # Transaction broadcaster (ARC)
+│   ├── carve/         # Transaction builder (UTXO selection + signing)
+│   ├── decodescript/  # Script disassembler
+│   ├── getraw/        # Transaction fetcher (WhatsOnChain)
+│   ├── keygen/        # Key pair generator
+│   ├── opreturn/      # OP_RETURN transaction builder
+│   ├── pick/          # Transaction field extractor
+│   ├── prettytx/      # Transaction parser/visualizer
+│   ├── signmsg/       # Message signer (BSM)
+│   ├── txstatus/      # Status checker (ARC)
+│   ├── verifymsg/     # Message verifier (BSM)
+│   └── wifinfo/       # WIF key inspector
 ├── internal/
 │   ├── arc/          # ARC client
 │   ├── cli/          # Shared CLI utilities

@@ -50,6 +50,17 @@ func ReadHexFromReader(r io.Reader) (string, error) {
 	return result.String(), nil
 }
 
+// ReadTextFromReader reads plaintext from any io.Reader, preserving spaces and content.
+// Only trailing newlines/carriage returns are trimmed. This is suitable for message
+// content where whitespace is significant (unlike ReadHexFromReader which strips all whitespace).
+func ReadTextFromReader(r io.Reader) (string, error) {
+	data, err := io.ReadAll(r)
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimRight(string(data), "\n\r"), nil
+}
+
 // CleanString removes all whitespace and non-printable ASCII characters from a string.
 // Only characters with ASCII codes 33-126 (printable, non-space) are retained.
 func CleanString(s string) string {
