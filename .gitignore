@@ -6,12 +6,19 @@
 *.dylib
 
 # Compiled CLI tools (ignore executables in root and cmd directories)
+/addr
+/balance
 /broadcast
 /carve
-/prettytx
-/txstatus
+/decodescript
 /getraw
+/keygen
+/opreturn
 /pick
+/prettytx
+/signmsg
+/txstatus
+/verifymsg
 /wifinfo
 cmd/*/[a-z]*[!.go]
 
