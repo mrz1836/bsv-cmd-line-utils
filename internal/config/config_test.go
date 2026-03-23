@@ -34,7 +34,7 @@ targets:
   default: "MINED"
   wait_for_mining: true
 `
-		err := os.WriteFile(configPath, []byte(configContent), 0644)
+		err := os.WriteFile(configPath, []byte(configContent), 0o644)
 		require.NoError(t, err)
 
 		cfg, err := LoadFromPath(configPath)
@@ -73,7 +73,7 @@ arc-mainnet:
   url: [invalid yaml
   this is broken
 `
-		err := os.WriteFile(configPath, []byte(invalidYAML), 0644)
+		err := os.WriteFile(configPath, []byte(invalidYAML), 0o644)
 		require.NoError(t, err)
 
 		_, err = LoadFromPath(configPath)
@@ -86,7 +86,7 @@ arc-mainnet:
 		tmpDir := t.TempDir()
 		configPath := filepath.Join(tmpDir, "config.yaml")
 
-		err := os.WriteFile(configPath, []byte(""), 0644)
+		err := os.WriteFile(configPath, []byte(""), 0o644)
 		require.NoError(t, err)
 
 		cfg, err := LoadFromPath(configPath)
@@ -107,7 +107,7 @@ arc-mainnet:
 arc-mainnet:
   url: "https://api.taal.com/arc"
 `
-		err := os.WriteFile(configPath, []byte(partialConfig), 0644)
+		err := os.WriteFile(configPath, []byte(partialConfig), 0o644)
 		require.NoError(t, err)
 
 		cfg, err := LoadFromPath(configPath)
@@ -131,7 +131,7 @@ arc-mainnet:
 unknown_section:
   foo: "bar"
 `
-		err := os.WriteFile(configPath, []byte(configWithExtra), 0644)
+		err := os.WriteFile(configPath, []byte(configWithExtra), 0o644)
 		require.NoError(t, err)
 
 		cfg, err := LoadFromPath(configPath)
@@ -274,7 +274,7 @@ arc-mainnet:
   api_key: "test-key"
   timeout: "45s"
 `
-		err := os.WriteFile(configPath, []byte(configContent), 0644)
+		err := os.WriteFile(configPath, []byte(configContent), 0o644)
 		require.NoError(t, err)
 
 		cfg, err := LoadFromPath(configPath)
@@ -298,7 +298,7 @@ polling:
   max_retries: 5
   backoff_factor: 2.0
 `
-	err := os.WriteFile(configPath, []byte(configContent), 0644)
+	err := os.WriteFile(configPath, []byte(configContent), 0o644)
 	require.NoError(t, err)
 
 	cfg, err := LoadFromPath(configPath)
@@ -320,7 +320,7 @@ targets:
   default: "SEEN_ON_NETWORK"
   wait_for_mining: false
 `
-	err := os.WriteFile(configPath, []byte(configContent), 0644)
+	err := os.WriteFile(configPath, []byte(configContent), 0o644)
 	require.NoError(t, err)
 
 	cfg, err := LoadFromPath(configPath)
@@ -348,7 +348,7 @@ func TestLoad(t *testing.T) {
 arc-mainnet:
   url: "https://current-dir.example.com"
 `
-		err := os.WriteFile(configPath, []byte(configContent), 0644)
+		err := os.WriteFile(configPath, []byte(configContent), 0o644)
 		require.NoError(t, err)
 
 		// Change to temp directory
@@ -389,7 +389,7 @@ func TestLoadFromPathEmptyPath(t *testing.T) {
 arc-mainnet:
   url: "https://empty-path-test.example.com"
 `
-	err = os.WriteFile(configPath, []byte(configContent), 0644)
+	err = os.WriteFile(configPath, []byte(configContent), 0o644)
 	require.NoError(t, err)
 
 	// Change to temp directory
